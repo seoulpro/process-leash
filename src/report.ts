@@ -54,7 +54,7 @@ export function renderMarkdown(report: RunReport): string {
 
 ## Termination
 
-Initial signal: ${report.termination.initialSignal ?? "none"}.  
+Initial signal: ${report.termination.initialSignal ?? "none"}.<br>
 Escalated to SIGKILL: ${report.termination.escalated ? "yes" : "no"}.
 
 ## Privacy
