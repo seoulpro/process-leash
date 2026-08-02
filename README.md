@@ -186,6 +186,15 @@ CPU and RSS enforcement, and report redaction.
 
 Version 0.1.0. The report schema is versioned; the CLI surface may still change.
 
+## Related projects
+
+- [embertop](https://github.com/seoulpro/embertop) — a host-level resource monitor showing
+  whole-machine totals; separate from process-leash, which limits only the process tree it spawns.
+- [token-lease](https://github.com/seoulpro/token-lease) — budget reservation as an
+  alternative to hard resource limits.
+- [tallyburn](https://github.com/seoulpro/tallyburn) — usage accounting for AI coding
+  clients running on the same machine.
+
 ## License
 
 Licensed under the [MIT License](LICENSE).

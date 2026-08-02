@@ -1,7 +1,7 @@
 {
   "name": "process-leash",
   "version": "0.1.0",
-  "description": "Local-first process-tree limits and incident reports for test commands",
+  "description": "Run a command under wall-clock, memory, and CPU limits with process-tree cleanup and incident reports",
   "author": "Sumin Lim <lim@limsumin.com> (https://limsumin.com)",
   "type": "module",
   "bin": {
@@ -24,12 +24,17 @@
     "node": ">=20.11"
   },
   "keywords": [
-    "process",
+    "process-management",
+    "process-tree",
+    "resource-limits",
     "timeout",
-    "memory",
-    "cpu",
+    "memory-limit",
+    "cpu-limit",
     "testing",
-    "cli"
+    "cli",
+    "ci",
+    "linux",
+    "macos"
   ],
   "license": "MIT",
   "publishConfig": {
