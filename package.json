@@ -2,6 +2,7 @@
   "name": "process-leash",
   "version": "0.1.0",
   "description": "Local-first process-tree limits and incident reports for test commands",
+  "author": "Sumin Lim <lim@limsumin.com> (https://limsumin.com)",
   "type": "module",
   "bin": {
     "process-leash": "dist/cli.js"
@@ -30,7 +31,7 @@
     "testing",
     "cli"
   ],
-  "license": "UNLICENSED",
+  "license": "MIT",
   "publishConfig": {
     "access": "public"
   },

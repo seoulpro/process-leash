@@ -188,6 +188,4 @@ Version 0.1.0. The report schema is versioned; the CLI surface may still change.
 
 ## License
 
-`package.json` currently declares `UNLICENSED`. No license has been granted for this code yet, and
-any license file in the tree is a draft candidate rather than an effective grant. A license will be
-chosen before any public release.
+Licensed under the [MIT License](LICENSE).
