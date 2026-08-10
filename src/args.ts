@@ -1,3 +1,4 @@
+import { resolve } from "node:path";
 import type { CliOptions } from "./model.js";
 import { parseBytes, parseDuration, parsePercent } from "./units.js";
 
@@ -132,7 +133,7 @@ export function parseCliArgs(argv: string[]): ParseResult {
   if (
     options.jsonReportPath !== null &&
     options.markdownReportPath !== null &&
-    options.jsonReportPath === options.markdownReportPath
+    resolve(options.jsonReportPath) === resolve(options.markdownReportPath)
   ) {
     throw new UsageError("JSON and Markdown reports need different paths");
   }

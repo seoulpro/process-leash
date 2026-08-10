@@ -54,6 +54,21 @@ test("CLI parsing keeps command arguments opaque", () => {
 test("CLI parsing requires a separator and at least one limit", () => {
   assert.throws(() => parseCliArgs(["node", "task.js"]), UsageError);
   assert.throws(() => parseCliArgs(["--", "node", "task.js"]), UsageError);
+  assert.throws(
+    () =>
+      parseCliArgs([
+        "--timeout",
+        "1s",
+        "--json",
+        "report.json",
+        "--markdown",
+        "./report.json",
+        "--",
+        "node",
+        "task.js",
+      ]),
+    UsageError,
+  );
 });
 
 test("Linux proc stat parsing handles spaces in process names", () => {

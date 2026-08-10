@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, readdir, rm, stat } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
@@ -64,6 +64,20 @@ test("report files are written with the stable schema", async () => {
     assert.equal(parsed.schemaVersion, 1);
     assert.equal(parsed.exit.wrapperCode, 124);
     assert.match(await readFile(markdownPath, "utf8"), /environment values/);
+    assert.equal((await stat(jsonPath)).mode & 0o777, 0o600);
+    assert.equal((await stat(markdownPath)).mode & 0o777, 0o600);
+  } finally {
+    await rm(directory, { recursive: true, force: true });
+  }
+});
+
+test("a failed replacement does not leave a temporary report", async () => {
+  const directory = await mkdtemp(join(tmpdir(), "process-leash-test-"));
+  try {
+    const occupied = join(directory, "occupied");
+    await mkdir(occupied);
+    await assert.rejects(writeReports(report, occupied, null));
+    assert.deepEqual(await readdir(directory), ["occupied"]);
   } finally {
     await rm(directory, { recursive: true, force: true });
   }
