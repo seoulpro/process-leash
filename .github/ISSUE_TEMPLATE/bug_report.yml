@@ -1,0 +1,42 @@
+name: Bug report
+description: Report incorrect limits, process-tree cleanup, reporting, or CLI behavior.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Remove credentials, private paths, and sensitive command arguments from
+        reports and examples. Report unintended process signaling, unsafe file
+        replacement, or privacy failures through
+        [SECURITY.md](../../SECURITY.md).
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: Package version or commit you are running.
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: Node.js version and operating system
+      placeholder: "Node.js 24.x on macOS 15"
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: >
+        Show the limits, a safe synthetic command or process tree, and the
+        smallest steps that reproduce the issue.
+      render: sh
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Observed and expected behavior
+      description: Include exit codes and a redacted report when relevant.
+    validations:
+      required: true
