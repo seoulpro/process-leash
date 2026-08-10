@@ -1,4 +1,5 @@
-import { rename, writeFile } from "node:fs/promises";
+import { randomUUID } from "node:crypto";
+import { rename, rm, writeFile } from "node:fs/promises";
 import { basename, dirname, join } from "node:path";
 import type { RunReport } from "./model.js";
 import { formatBytes, formatDuration } from "./units.js";
@@ -67,10 +68,21 @@ excluded. Child output is inherited by the terminal and is not captured by Proce
 async function atomicWrite(target: string, content: string): Promise<void> {
   const temporary = join(
     dirname(target),
-    `.${basename(target)}.${process.pid}.${Date.now()}.tmp`,
+    `.${basename(target)}.${process.pid}.${randomUUID()}.tmp`,
   );
-  await writeFile(temporary, content, { encoding: "utf8", mode: 0o600 });
-  await rename(temporary, target);
+  let created = false;
+  try {
+    await writeFile(temporary, content, {
+      encoding: "utf8",
+      flag: "wx",
+      mode: 0o600,
+    });
+    created = true;
+    await rename(temporary, target);
+  } catch (error) {
+    if (created) await rm(temporary, { force: true }).catch(() => undefined);
+    throw error;
+  }
 }
 
 export async function writeReports(
