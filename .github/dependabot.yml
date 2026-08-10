@@ -9,9 +9,17 @@ updates:
       time: "09:00"
       timezone: Asia/Seoul
     open-pull-requests-limit: 5
+    allow:
+      - dependency-type: development
+        update-types:
+          - version-update:semver-minor
+          - version-update:semver-patch
     groups:
       development-dependencies:
         dependency-type: development
+        update-types:
+          - minor
+          - patch
     commit-message:
       prefix: chore
 
