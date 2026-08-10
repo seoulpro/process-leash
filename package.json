@@ -9,16 +9,21 @@
   },
   "files": [
     "dist",
+    "CHANGELOG.md",
     "README.md",
+    "SECURITY.md",
     "LICENSE"
   ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint .",
-    "test": "npm run build && node --test --import tsx 'test/**/*.test.ts'",
-    "check": "npm run lint && npm run typecheck && npm test",
-    "pack:check": "npm pack --dry-run"
+    "test": "npm run build && node --test --import tsx test/*.test.ts",
+    "package:smoke": "npm run build && node scripts/verify-package.mjs",
+    "check": "npm run lint && npm run typecheck && npm test && npm run package:smoke",
+    "pack:check": "npm pack --dry-run",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run check"
   },
   "engines": {
     "node": ">=20.11"
@@ -37,6 +42,14 @@
     "macos"
   ],
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seoulpro/process-leash.git"
+  },
+  "bugs": {
+    "url": "https://github.com/seoulpro/process-leash/issues"
+  },
+  "homepage": "https://github.com/seoulpro/process-leash#readme",
   "publishConfig": {
     "access": "public"
   },
