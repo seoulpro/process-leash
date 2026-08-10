@@ -51,6 +51,21 @@ test("the wrapped command exit code is preserved", async () => {
   assert.equal(result.signal, null);
 });
 
+test("long wall-clock limits do not overflow the runtime timer", async () => {
+  const result = await run([
+    "--timeout",
+    "1000h",
+    "--quiet",
+    "--",
+    process.execPath,
+    join(fixtures, "exit.mjs"),
+    "0",
+  ]);
+  assert.equal(result.code, 0);
+  assert.equal(result.signal, null);
+  assert.doesNotMatch(result.stderr, /TimeoutOverflowWarning/);
+});
+
 test("wall-clock breach escalates an uncooperative process tree", async () => {
   const directory = await mkdtemp(join(tmpdir(), "process-leash-test-"));
   try {
