@@ -15,11 +15,16 @@ leash, not an infinite one.
 
 ## Quickstart
 
-Requires Node.js 20.11 or newer on Linux or macOS. Nothing has been published to a package registry,
-so install from a checkout:
+Requires Node.js 20.11 or newer on Linux or macOS. Install the CLI from npm:
 
 ```sh
-npm install
+npm install --global process-leash
+```
+
+To work from a source checkout instead:
+
+```sh
+npm ci
 npm run build
 npm link
 ```
