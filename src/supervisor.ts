@@ -16,6 +16,7 @@ import { formatDuration } from "./units.js";
 
 const LIMIT_EXIT_CODE = 124;
 const INTERNAL_EXIT_CODE = 125;
+const MAX_TIMER_DELAY_MS = 2_147_483_647;
 
 interface ExitState {
   code: number | null;
@@ -252,6 +253,33 @@ export async function supervise(
     startTermination("SIGTERM");
   }
 
+  function scheduleWallClockLimit(): void {
+    if (
+      options.timeoutMs === null ||
+      finished ||
+      breach !== null ||
+      forcedWrapperCode !== null
+    ) {
+      return;
+    }
+    const atMs = Math.max(0, now() - startedMonotonic);
+    const remainingMs = options.timeoutMs - atMs;
+    if (remainingMs <= 0) {
+      startBreach({
+        kind: "wall-clock",
+        limit: options.timeoutMs,
+        observed: atMs,
+        unit: "milliseconds",
+        atMs,
+      });
+      return;
+    }
+    wallTimer = setTimeout(
+      scheduleWallClockLimit,
+      Math.min(remainingMs, MAX_TIMER_DELAY_MS),
+    );
+  }
+
   async function sample(): Promise<void> {
     if (finished) return;
     if (sampling) {
@@ -357,18 +385,7 @@ export async function supervise(
     }
   });
 
-  if (options.timeoutMs !== null) {
-    wallTimer = setTimeout(() => {
-      const atMs = now() - startedMonotonic;
-      startBreach({
-        kind: "wall-clock",
-        limit: options.timeoutMs ?? 0,
-        observed: atMs,
-        unit: "milliseconds",
-        atMs,
-      });
-    }, options.timeoutMs);
-  }
+  scheduleWallClockLimit();
 
   void sample();
   return reportPromise;
