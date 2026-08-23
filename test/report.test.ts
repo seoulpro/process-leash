@@ -5,6 +5,7 @@ import { join } from "node:path";
 import { test } from "node:test";
 import type { RunReport } from "../src/model.js";
 import { renderMarkdown, writeReports } from "../src/report.js";
+import { renderSummary } from "../src/summary.js";
 
 const report: RunReport = {
   schemaVersion: 1,
@@ -52,6 +53,27 @@ test("Markdown report contains metrics but no command field", () => {
   assert.match(markdown, /Incident Report/);
   assert.match(markdown, /2\.00 KiB/);
   assert.doesNotMatch(markdown, /command arguments?:/i);
+});
+
+test("human-readable output distinguishes missing samples from zero usage", () => {
+  const unsampled: RunReport = {
+    ...report,
+    observed: {
+      peakTreeRssBytes: 0,
+      peakCpuPercent: 0,
+      peakProcessCount: 0,
+    },
+  };
+
+  const summary = renderSummary(unsampled);
+  assert.match(summary, /peak RSS=not sampled/);
+  assert.match(summary, /peak CPU=not sampled/);
+  assert.match(summary, /peak processes=not sampled/);
+
+  const markdown = renderMarkdown(unsampled);
+  assert.match(markdown, /\| Tree RSS \| not sampled \|/);
+  assert.match(markdown, /\| CPU \| not sampled \|/);
+  assert.match(markdown, /\| Process count \| not sampled \|/);
 });
 
 test("report files are written with the stable schema", async () => {

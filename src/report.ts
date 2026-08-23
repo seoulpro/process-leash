@@ -14,6 +14,7 @@ function nullable(value: number | null, format: (item: number) => string): strin
 
 export function renderMarkdown(report: RunReport): string {
   const title = report.outcome === "limit-exceeded" ? "Incident Report" : "Execution Report";
+  const sampled = report.observed.peakProcessCount > 0;
   const breach =
     report.breach === null
       ? "None"
@@ -49,9 +50,9 @@ export function renderMarkdown(report: RunReport): string {
 
 | Metric | Value |
 | --- | ---: |
-| Tree RSS | ${formatBytes(report.observed.peakTreeRssBytes)} |
-| CPU | ${report.observed.peakCpuPercent.toFixed(2)}% |
-| Process count | ${report.observed.peakProcessCount} |
+| Tree RSS | ${sampled ? formatBytes(report.observed.peakTreeRssBytes) : "not sampled"} |
+| CPU | ${sampled ? `${report.observed.peakCpuPercent.toFixed(2)}%` : "not sampled"} |
+| Process count | ${sampled ? report.observed.peakProcessCount : "not sampled"} |
 
 ## Termination
 
