@@ -7,6 +7,12 @@ and releases follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Fixed
+
+- Human-readable summaries and Markdown reports now label resource peaks as
+  `not sampled` when the monitor never observed a process, rather than implying
+  factual zero-byte, zero-CPU usage. The JSON schema remains unchanged.
+
 ## [0.1.0] - 2026-08-10
 
 ### Added

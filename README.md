@@ -127,6 +127,10 @@ Reports carry the outcome and reason, the platform and its measurement source, s
 the limits in effect, peak tree RSS, peak CPU, peak process count, the breach, the termination steps
 taken, and the exit status. JSON reports include a `schemaVersion` field, currently `1`. Markdown
 reports are titled *Incident Report* after a breach and *Execution Report* otherwise.
+If the command exits before the monitor observes a process, the human-readable
+summary and Markdown report label all three peaks as `not sampled` instead of
+presenting zero as a measurement. The versioned JSON schema retains numeric
+zeroes, with `peakProcessCount: 0` serving as the sampling-evidence signal.
 
 Reports deliberately exclude:
 

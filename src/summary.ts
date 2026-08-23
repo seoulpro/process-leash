@@ -13,13 +13,14 @@ export function breachDescription(breach: Breach): string {
 }
 
 export function renderSummary(report: RunReport): string {
+  const sampled = report.observed.peakProcessCount > 0;
   const pieces = [
     report.outcome,
     `exit=${report.exit.wrapperCode}`,
     formatDuration(report.timing.durationMs),
-    `peak RSS=${formatBytes(report.observed.peakTreeRssBytes)}`,
-    `peak CPU=${report.observed.peakCpuPercent.toFixed(1)}%`,
-    `peak processes=${report.observed.peakProcessCount}`,
+    `peak RSS=${sampled ? formatBytes(report.observed.peakTreeRssBytes) : "not sampled"}`,
+    `peak CPU=${sampled ? `${report.observed.peakCpuPercent.toFixed(1)}%` : "not sampled"}`,
+    `peak processes=${sampled ? report.observed.peakProcessCount : "not sampled"}`,
   ];
   return `process-leash: ${pieces.join(" | ")}`;
 }
