@@ -1,6 +1,6 @@
 {
   "name": "process-leash",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Run a command under wall-clock, memory, and CPU limits with process-tree cleanup and incident reports",
   "author": "Sumin Lim <lim@limsumin.com> (https://limsumin.com)",
   "type": "module",
