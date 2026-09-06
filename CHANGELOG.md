@@ -7,6 +7,8 @@ and releases follow [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-09-06
+
 ### Fixed
 
 - Human-readable summaries and Markdown reports now label resource peaks as

@@ -2,7 +2,7 @@ import { resolve } from "node:path";
 import type { CliOptions } from "./model.js";
 import { parseBytes, parseDuration, parsePercent } from "./units.js";
 
-export const VERSION = "0.1.0";
+export const VERSION = "0.1.1";
 
 export class UsageError extends Error {}
 

@@ -193,7 +193,7 @@ CPU and RSS enforcement, and report redaction.
 
 ## Status
 
-Version 0.1.0. The report schema is versioned; the CLI surface may still change.
+Version 0.1.1. The report schema is versioned; the CLI surface may still change.
 
 ## Related projects
 
